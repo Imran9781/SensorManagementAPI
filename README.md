@@ -73,3 +73,6 @@ This is because the 404 response means the URL doesn't exist which isn't the cas
 
 5.4
 Exposing internal Java stack traces to external users raises the risk of a cyber attack by allowing them to understand the structure of the API and exposing vulnerabilities to abuse. In this API the GlobalExceptionMapper prevents this by catching all errors and returning a generic 500 response which is a safe alternative to exposing the stack trace. This in turn prevents internal details being revealed to external users.
+
+5.5
+For Logger.info() when making changes you have to manually update all your resource methods across every class, whereas with a JAX-RS filter you only need to make the change once and it applies across all classes automatically. This makes it more time effective and less straining when changes need to be made later in the code.
