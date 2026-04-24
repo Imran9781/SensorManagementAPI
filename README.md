@@ -40,6 +40,7 @@ curl -X POST http://localhost:8080/SensorManagementAPI/api/v1/sensors/1/readings
 5. Delete a room:
 curl -X DELETE http://localhost:8080/SensorManagementAPI/api/v1/rooms/3
 
+
 1. Project & Application Configuration 
 1.1 
 The lifecycle of a JAX-RS Resource class is that once a request is sent to the API, JAX-RS creates a new instance and this is the same for every request sent to the API. However the data in DataStorage is stored as static which means it belongs to the class itself and not to any individual instance. This means all instances can access the same data so any changes made in one request such as adding a room or sensor are still visible to all other requests.
@@ -58,4 +59,6 @@ We specifically use the @Consumes(MediaType.APPLICATION_JSON) annotation on the 
 3.2
 @QueryParam allows the user more freedom when filtering because they can retrieve all sensor data by calling GET /api/v1/sensors or filter by type by calling GET /api/v1/sensors?type=CO2. Using @QueryParam keeps the filter optional and separate from the URL structure, whereas @PathParam would force the user to always include a type in the URL, making it part of the resource path rather than a search filter. This is why @QueryParam is the better approach for filtering collections.
 4.1
+The Sub-Resource Locator pattern is a method which allows a resource class to offload requests to other classes with a dedicated purpose. In this API, SensorResource splits the requests between itself managing sensors and SensorReadingResource which focuses on all sensor reading related requests. This makes each class smaller and easier to understand and you can continue to add more sub-resource classes without impacting the existing code. This makes the overall process simpler and avoids having one large complex class.
+5.2
 
